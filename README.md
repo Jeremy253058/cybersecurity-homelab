@@ -1,131 +1,127 @@
 # 🔐 Cybersecurity Homelab
 
-Homelab personnel dédié à la pratique de la cybersécurité, de l'administration systèmes et réseaux et des environnements Active Directory.
+Homelab personnel dédié à la pratique de la cybersécurité, de l'administration systèmes et réseaux, d'Active Directory et de la Blue Team.
 
-L'objectif est de construire progressivement une infrastructure réaliste permettant de pratiquer des scénarios **Red Team, Blue Team et Purple Team**.
-
-## 🏗️ Architecture actuelle
+## 🏗️ Architecture
 
 ```text
-                         INTERNET
-                            │
-                         NAT-Lab
-                       10.0.2.0/24
-                            │
-                       10.0.2.4
-                     ┌─────────────┐
-                     │    SRV25    │
-                     │ Windows     │
-                     │ Server 2025 │
-                     │ AD DS + DNS │
-                     └──────┬──────┘
-                            │
-                      LAB-CYBER
-                   192.168.100.0/24
-                            │
-                 ┌──────────┼──────────┐
-                 │          │          │
-             Windows      Kali      Other VMs
-              Client      Linux
-🖥️ Infrastructure
-Élément	Configuration
-Hyperviseur	Oracle VirtualBox
-Serveur	Windows Server 2025
-Nom du serveur	SRV25
-Domaine	lab-cyber.local
-NetBIOS	LAB-CYBER
-AD DS	Activé
-DNS	Activé
-Réseau Internet	10.0.2.0/24
-Réseau laboratoire	192.168.100.0/24
-📁 Organisation
-installation.md — Installation et configuration initiale de Windows Server
-network.md — Configuration réseau du laboratoire
-domain.md — Installation et configuration Active Directory
-users-groups.md — Utilisateurs, groupes et OU
-dns.md — Configuration et tests DNS
-troubleshooting.md — Résolution des problèmes rencontrés
-next-steps.md — Évolutions prévues du laboratoire
-🔐 Active Directory
+Internet
+   │
+Nat-Lab 10.0.2.0/24
+   │
+SRV25 — Windows Server 2025
+10.0.2.4 / 192.168.100.10
+   │
+LAB-CYBER 192.168.100.0/24
+   │
+WIN11-CLIENT — 192.168.100.20
+```
 
-Le domaine de laboratoire est :
+## 🖥️ Infrastructure
 
-lab-cyber.local
+| Élément | Configuration |
+|---|---|
+| Hyperviseur | Oracle VirtualBox |
+| Serveur | Windows Server 2025 / SRV25 |
+| Domaine | `lab-cyber.local` |
+| NetBIOS | `LAB-CYBER` |
+| AD DS | Activé |
+| DNS | Activé |
+| Réseau lab | `192.168.100.0/24` |
+| Client | Windows 11 / WIN11-CLIENT |
 
-Structure actuelle :
+## 📚 Documentation
 
+- [Active Directory](domain.md)
+- [Utilisateurs, groupes et OU](users-groups.md)
+- [GPO et durcissement](gpo-hardening.md)
+- [Audit Windows / AD](audit.md)
+- [Sysmon](sysmon.md)
+- [Exercices Blue Team](blue-team.md)
+- [Réseau](network.md)
+- [Dépannage](troubleshooting.md)
+- [Prochaines étapes](next-steps.md)
+
+## 🔐 Active Directory
+
+Structure :
+
+```text
 LAB-CYBER
-│
 ├── Admins
 ├── Utilisateurs
 ├── Postes
 ├── Serveurs
 └── Groupes
+```
 
-Utilisateurs et groupes de test :
+Comptes/groupes de lab :
+- `jdupont`
+- `admin-cyber`
+- `GG-Utilisateurs`
+- `test-attacker`
 
-Jean Dupont
-admin-cyber
-GG-Utilisateurs
-🎯 Objectifs du Homelab
-Phase 1 — Infrastructure
- Installation Windows Server 2025
- Configuration réseau
- Installation Active Directory
- Installation DNS
- Création du domaine
- Création des OU
- Création des utilisateurs et groupes
-Phase 2 — Sécurisation
- Création des GPO de sécurité
- Durcissement Windows Server
- Gestion des comptes privilégiés
- Politiques de mots de passe
- Audit et journalisation
- Segmentation réseau
-Phase 3 — Blue Team
- Centralisation des logs
- Détection d'activités suspectes
- SIEM
- Analyse des événements Windows
- Détection avec Sysmon
- Réponse à incident
-Phase 4 — Red Team
- Intégration d'une machine Kali Linux
- Reconnaissance réseau
- Tests Active Directory
- Exploitation contrôlée
- Tests de privilèges
- Simulation d'attaque
-Phase 5 — Purple Team
- Scénarios attaque/défense
- Mapping MITRE ATT&CK
- Détection des techniques utilisées
- Amélioration des règles de détection
-🧰 Technologies
-Windows Server
-Active Directory
-DNS
-VirtualBox
-Linux
-Kali Linux
-PowerShell
-Réseaux TCP/IP
-GPO
-SIEM
-MITRE ATT&CK
-📚 Objectif professionnel
+## 🛡️ Blue Team
 
-Ce projet me permet de développer mes compétences pratiques en :
+Travaux réalisés :
 
-Administration systèmes
-Administration réseaux
-Active Directory
-Sécurité des infrastructures
-Windows Security
-Détection et réponse aux incidents
-Red Team / Blue Team
-Cloud et cybersécurité
+- GPO de sécurité et politique de mots de passe ;
+- verrouillage de compte ;
+- audit des comptes et groupes ;
+- journalisation PowerShell ;
+- déploiement de Sysmon ;
+- analyse Sysmon Event ID 1 ;
+- analyse Security Event ID 4728 ;
+- analyse Security Event ID 4740 ;
+- corrélation temporelle d'événements.
 
-Projet réalisé dans le cadre de mon parcours en Master/Mastère Cybersécurité.
+### Événements étudiés
 
+| Event ID | Source | Signification |
+|---|---|---|
+| 1 | Sysmon | Création de processus |
+| 4728 | Security | Ajout d'un membre à un groupe global de sécurité |
+| 4740 | Security | Verrouillage d'un compte |
+
+## 🎯 Progression
+
+### Infrastructure
+- [x] Windows Server 2025
+- [x] Réseau VirtualBox
+- [x] Active Directory
+- [x] DNS
+- [x] OU, utilisateurs et groupes
+- [x] Client Windows 11 joint au domaine
+
+### Sécurisation
+- [x] GPO de sécurité
+- [x] Politique de mots de passe
+- [x] Politique de verrouillage
+- [x] Audit Windows
+- [x] Journalisation PowerShell
+
+### Blue Team
+- [x] Sysmon
+- [x] Event ID 1
+- [x] Event ID 4728
+- [x] Event ID 4740
+- [x] Corrélation d'événements
+- [ ] SIEM / centralisation
+- [ ] Règles de détection avancées
+- [ ] Réponse à incident complète
+
+### Red / Purple Team
+- [ ] Kali Linux
+- [ ] Tests AD contrôlés
+- [ ] Scénarios attaque/défense
+- [ ] Mapping MITRE ATT&CK
+
+## 🧰 Technologies
+
+Windows Server · Windows 11 · Active Directory · DNS · VirtualBox · PowerShell · GPO · Sysmon · TCP/IP · Linux/Kali · SIEM · MITRE ATT&CK
+
+## 📚 Objectif professionnel
+
+Ce projet développe des compétences pratiques en administration systèmes et réseaux, Active Directory, Windows Security, durcissement, analyse de logs, détection et réponse aux incidents, et Blue/Red/Purple Team.
+
+Projet réalisé dans le cadre du parcours Master/Mastère Cybersécurité.
