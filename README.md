@@ -15,6 +15,11 @@ SRV25 — Windows Server 2025
 LAB-CYBER 192.168.100.0/24
    │
 WIN11-CLIENT — 192.168.100.20
+   │
+   └── Sysmon → événements Windows
+                 │
+                 ▼
+          WEF / WEC (SRV25)
 ```
 
 ## 🖥️ Infrastructure
@@ -29,6 +34,7 @@ WIN11-CLIENT — 192.168.100.20
 | DNS | Activé |
 | Réseau lab | `192.168.100.0/24` |
 | Client | Windows 11 / WIN11-CLIENT |
+| Collecte d'événements | Windows Event Collector sur SRV25 |
 
 ## 📚 Documentation
 
@@ -37,6 +43,7 @@ WIN11-CLIENT — 192.168.100.20
 - [GPO et durcissement](gpo-hardening.md)
 - [Audit Windows / AD](audit.md)
 - [Sysmon](sysmon.md)
+- [WEF / WEC](wef-wec.md)
 - [Exercices Blue Team](blue-team.md)
 - [Réseau](network.md)
 - [Dépannage](troubleshooting.md)
@@ -73,7 +80,9 @@ Travaux réalisés :
 - analyse Sysmon Event ID 1 ;
 - analyse Security Event ID 4728 ;
 - analyse Security Event ID 4740 ;
-- corrélation temporelle d'événements.
+- corrélation temporelle d'événements ;
+- configuration de Windows Event Collector (WEC) sur SRV25 ;
+- préparation de Windows Event Forwarding (WEF) pour la centralisation des journaux.
 
 ### Événements étudiés
 
@@ -82,6 +91,19 @@ Travaux réalisés :
 | 1 | Sysmon | Création de processus |
 | 4728 | Security | Ajout d'un membre à un groupe global de sécurité |
 | 4740 | Security | Verrouillage d'un compte |
+
+## 📡 Centralisation des événements
+
+Le serveur `SRV25` a été configuré comme **Windows Event Collector (WEC)** avec :
+
+```powershell
+winrm quickconfig
+wecutil quick-config
+```
+
+Le service Windows Event Collector est opérationnel.
+
+**Prochaine étape :** configurer `WIN11-CLIENT` comme source WEF et créer une souscription pour centraliser les événements de sécurité et Sysmon sur SRV25.
 
 ## 🎯 Progression
 
@@ -106,7 +128,9 @@ Travaux réalisés :
 - [x] Event ID 4728
 - [x] Event ID 4740
 - [x] Corrélation d'événements
-- [ ] SIEM / centralisation
+- [x] Configuration WEC sur SRV25
+- [ ] Configuration WEF sur WIN11-CLIENT
+- [ ] Souscription WEF et centralisation des événements
 - [ ] Règles de détection avancées
 - [ ] Réponse à incident complète
 
@@ -118,10 +142,10 @@ Travaux réalisés :
 
 ## 🧰 Technologies
 
-Windows Server · Windows 11 · Active Directory · DNS · VirtualBox · PowerShell · GPO · Sysmon · TCP/IP · Linux/Kali · SIEM · MITRE ATT&CK
+Windows Server · Windows 11 · Active Directory · DNS · VirtualBox · PowerShell · GPO · Sysmon · WEF/WEC · TCP/IP · Linux/Kali · SIEM · MITRE ATT&CK
 
 ## 📚 Objectif professionnel
 
-Ce projet développe des compétences pratiques en administration systèmes et réseaux, Active Directory, Windows Security, durcissement, analyse de logs, détection et réponse aux incidents, et Blue/Red/Purple Team.
+Ce projet développe des compétences pratiques en administration systèmes et réseaux, Active Directory, Windows Security, durcissement, centralisation et analyse de logs, détection et réponse aux incidents, et Blue/Red/Purple Team.
 
 Projet réalisé dans le cadre du parcours Master/Mastère Cybersécurité.
