@@ -1,28 +1,52 @@
 # 🔐 Cybersecurity Homelab
 
-Homelab personnel dédié à la pratique de la cybersécurité, de l'administration systèmes et réseaux, d'Active Directory et de la Blue Team.
+Homelab personnel dédié à la pratique de la cybersécurité, de l'administration systèmes et réseaux, d'Active Directory, de la Blue Team et de la sécurité réseau Cisco.
 
-## 🏗️ Architecture
+## 🏗️ Architecture principale
 
-```text
-Internet
-   │
-Nat-Lab 10.0.2.0/24
-   │
-SRV25 — Windows Server 2025
-10.0.2.4 / 192.168.100.10
-   │
-LAB-CYBER 192.168.100.0/24
-   │
-WIN11-CLIENT — 192.168.100.20
-   │
-   └── Sysmon → événements Windows
-                 │
-                 ▼
-          WEF / WEC (SRV25)
-```
+Le projet est organisé autour de deux environnements complémentaires :
 
-## 🖥️ Infrastructure
+1. **Homelab Windows / Active Directory / Blue Team**
+   - Windows Server 2025 / SRV25
+   - Active Directory / DNS
+   - Windows 11 / WIN11-CLIENT
+   - GPO / audit / Sysmon
+   - WEF / WEC
+
+2. **Lab réseau Cisco Packet Tracer**
+   - architecture multi-VLAN
+   - routage inter-VLAN
+   - ACL
+   - sécurité Layer 2
+   - SSHv2
+   - OSPF
+   - NAT/PAT
+   - scénarios Red Team / Blue Team
+
+## 📚 Documentation
+
+### Homelab Windows / Blue Team
+
+- [Active Directory](domain.md)
+- [Utilisateurs, groupes et OU](users-groups.md)
+- [GPO et durcissement](gpo-hardening.md)
+- [Audit Windows / AD](audit.md)
+- [Sysmon](sysmon.md)
+- [WEF / WEC](wef-wec.md)
+- [Exercices Blue Team](blue-team.md)
+- [Réseau](network.md)
+- [Dépannage](troubleshooting.md)
+- [Prochaines étapes](next-steps.md)
+
+### Cisco Packet Tracer
+
+- [Vue d'ensemble du projet](05-packet-tracer/README.md)
+- [Architecture et plan d'adressage](05-packet-tracer/architecture-addressing.md)
+- [Configuration et sécurité](05-packet-tracer/configuration-security.md)
+- [Routage, OSPF et NAT/PAT](05-packet-tracer/routing-wan.md)
+- [Scénarios Red Team / Blue Team](05-packet-tracer/red-blue-tests.md)
+
+## 🖥️ Infrastructure Windows
 
 | Élément | Configuration |
 |---|---|
@@ -36,37 +60,15 @@ WIN11-CLIENT — 192.168.100.20
 | Client | Windows 11 / WIN11-CLIENT |
 | Collecte d'événements | Windows Event Collector sur SRV25 |
 
-## 📚 Documentation
+## 🌐 Infrastructure Packet Tracer
 
-- [Active Directory](domain.md)
-- [Utilisateurs, groupes et OU](users-groups.md)
-- [GPO et durcissement](gpo-hardening.md)
-- [Audit Windows / AD](audit.md)
-- [Sysmon](sysmon.md)
-- [WEF / WEC](wef-wec.md)
-- [Exercices Blue Team](blue-team.md)
-- [Réseau](network.md)
-- [Dépannage](troubleshooting.md)
-- [Prochaines étapes](next-steps.md)
-
-## 🔐 Active Directory
-
-Structure :
-
-```text
-LAB-CYBER
-├── Admins
-├── Utilisateurs
-├── Postes
-├── Serveurs
-└── Groupes
-```
-
-Comptes/groupes de lab :
-- `jdupont`
-- `admin-cyber`
-- `GG-Utilisateurs`
-- `test-attacker`
+| Élément | Rôle |
+|---|---|
+| SW-CORE | cœur réseau, routage inter-VLAN, ACL, OSPF, management |
+| SW-ACCESS1 | accès utilisateurs et sécurité Layer 2 |
+| R1-EDGE | routage frontière, OSPF, NAT/PAT |
+| ISP-ROUTER | Internet simulé |
+| VLANs | 10 ADMIN / 20 USERS / 30 SERVERS / 40 VOIP / 50 GUEST / 60 MANAGEMENT / 70 DMZ |
 
 ## 🛡️ Blue Team
 
@@ -81,33 +83,36 @@ Travaux réalisés :
 - analyse Security Event ID 4728 ;
 - analyse Security Event ID 4740 ;
 - corrélation temporelle d'événements ;
-- configuration de Windows Event Collector (WEC) sur SRV25 ;
-- préparation de Windows Event Forwarding (WEF) pour la centralisation des journaux.
+- configuration WEC sur SRV25 ;
+- préparation de WEF pour la centralisation des journaux ;
+- segmentation réseau Cisco ;
+- ACL Guest et DMZ ;
+- Port Security ;
+- DHCP Snooping ;
+- Dynamic ARP Inspection ;
+- Rapid-PVST+ ;
+- SSHv2 et restriction de l'administration ;
+- OSPF ;
+- NAT/PAT.
 
-### Événements étudiés
+## 🔴🔵 Red / Blue Team
 
-| Event ID | Source | Signification |
-|---|---|---|
-| 1 | Sysmon | Création de processus |
-| 4728 | Security | Ajout d'un membre à un groupe global de sécurité |
-| 4740 | Security | Verrouillage d'un compte |
+Scénarios Packet Tracer documentés :
 
-## 📡 Centralisation des événements
+- Guest → Servers bloqué par ACL ;
+- DMZ → Servers bloqué par ACL ;
+- équipement non autorisé détecté par Port Security ;
+- tentative DHCP Rogue ;
+- tentative ARP spoofing / DAI ;
+- administration SSH autorisée depuis ADMIN et refusée depuis GUEST ;
+- validation OSPF ;
+- validation NAT/PAT.
 
-Le serveur `SRV25` a été configuré comme **Windows Event Collector (WEC)** avec :
-
-```powershell
-winrm quickconfig
-wecutil quick-config
-```
-
-Le service Windows Event Collector est opérationnel.
-
-**Prochaine étape :** configurer `WIN11-CLIENT` comme source WEF et créer une souscription pour centraliser les événements de sécurité et Sysmon sur SRV25.
+Les résultats distinguent explicitement les contrôles réellement validés de ceux qui ont seulement été configurés mais non démontrés dans Packet Tracer.
 
 ## 🎯 Progression
 
-### Infrastructure
+### Infrastructure Windows
 - [x] Windows Server 2025
 - [x] Réseau VirtualBox
 - [x] Active Directory
@@ -115,37 +120,48 @@ Le service Windows Event Collector est opérationnel.
 - [x] OU, utilisateurs et groupes
 - [x] Client Windows 11 joint au domaine
 
-### Sécurisation
+### Sécurisation Windows
 - [x] GPO de sécurité
 - [x] Politique de mots de passe
 - [x] Politique de verrouillage
 - [x] Audit Windows
 - [x] Journalisation PowerShell
-
-### Blue Team
 - [x] Sysmon
+
+### Blue Team / centralisation
 - [x] Event ID 1
 - [x] Event ID 4728
 - [x] Event ID 4740
 - [x] Corrélation d'événements
 - [x] Configuration WEC sur SRV25
-- [ ] Configuration WEF sur WIN11-CLIENT
-- [ ] Souscription WEF et centralisation des événements
+- [ ] Configuration WEF complète sur WIN11-CLIENT
+- [ ] Centralisation complète des événements
 - [ ] Règles de détection avancées
 - [ ] Réponse à incident complète
 
-### Red / Purple Team
-- [ ] Kali Linux
-- [ ] Tests AD contrôlés
-- [ ] Scénarios attaque/défense
-- [ ] Mapping MITRE ATT&CK
+### Cisco / réseau sécurisé
+- [x] VLAN 10/20/30/40/50/60/70
+- [x] Trunks 802.1Q
+- [x] Routage inter-VLAN
+- [x] ACL Guest
+- [x] ACL DMZ
+- [x] Port Security
+- [x] DHCP Snooping configuré
+- [x] DAI actif
+- [x] Rapid-PVST+
+- [x] SSHv2
+- [x] OSPF
+- [x] NAT/PAT
+- [x] Scénarios Red Team / Blue Team
+- [ ] Validation DHCP Snooping dans un environnement permettant son fonctionnement complet
+- [ ] Validation DAI avec une véritable trame ARP spoofing
 
 ## 🧰 Technologies
 
-Windows Server · Windows 11 · Active Directory · DNS · VirtualBox · PowerShell · GPO · Sysmon · WEF/WEC · TCP/IP · Linux/Kali · SIEM · MITRE ATT&CK
+Windows Server · Windows 11 · Active Directory · DNS · VirtualBox · PowerShell · GPO · Sysmon · WEF/WEC · Cisco Packet Tracer · VLAN · ACL · SSH · OSPF · NAT/PAT · TCP/IP · Linux/Kali · SIEM · MITRE ATT&CK
 
 ## 📚 Objectif professionnel
 
-Ce projet développe des compétences pratiques en administration systèmes et réseaux, Active Directory, Windows Security, durcissement, centralisation et analyse de logs, détection et réponse aux incidents, et Blue/Red/Purple Team.
+Ce projet développe des compétences pratiques en administration systèmes et réseaux, Active Directory, Windows Security, durcissement, segmentation réseau, sécurité des équipements, centralisation et analyse de logs, détection et réponse aux incidents, et Blue/Red/Purple Team.
 
 Projet réalisé dans le cadre du parcours Master/Mastère Cybersécurité.
