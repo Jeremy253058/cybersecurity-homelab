@@ -53,13 +53,40 @@ DAI était actif et configuré avec les validations MAC/IP, mais la méthode de 
 
 Ces points restent donc des pistes de validation dans un environnement plus réaliste plutôt que des contrôles déclarés comme démontrés.
 
-## Red / Purple Team
+## 🔴 Pentest / Red Team
 
-10. Ajouter Kali Linux lorsque les ressources le permettront
-11. Réaliser des tests AD contrôlés
-12. Construire des scénarios attaque/défense
-13. Corréler les événements d'attaque avec les logs Windows/Sysmon
-14. Étendre les scénarios Purple Team aux contrôles réseau Cisco
+Le nouveau module est documenté dans :
+
+`10-pentest/README.md`
+
+Progression prévue :
+
+1. Reconnaissance du périmètre autorisé
+2. Network Scanning
+3. Énumération des services
+4. Analyse de vulnérabilités
+5. Web Security sur cibles de formation
+6. Windows / Active Directory
+7. Linux
+8. Exploitation contrôlée
+9. Post-exploitation contrôlée
+10. Analyse des traces côté Blue Team
+11. Mapping MITRE ATT&CK
+12. Rapport de pentest
+13. Scénarios Purple Team
+
+La VM Kali sera ajoutée lorsque les ressources du poste le permettront. Les premiers exercices peuvent être préparés sans ajouter immédiatement une nouvelle VM.
+
+## 🔴🔵 Purple Team
+
+Après les premiers exercices Pentest :
+
+- lancer un scénario Red Team contrôlé ;
+- observer les traces générées ;
+- corréler avec Windows Event Logs et Sysmon ;
+- identifier les techniques MITRE ATT&CK ;
+- créer ou améliorer les règles de détection ;
+- rejouer le scénario pour vérifier la détection.
 
 ## Note sur le SIEM
 
