@@ -1,10 +1,10 @@
 # 🔐 Cybersecurity Homelab
 
-Homelab personnel dédié à la pratique de la cybersécurité, de l'administration systèmes et réseaux, d'Active Directory, de la Blue Team et de la sécurité réseau Cisco.
+Homelab personnel dédié à la pratique de la cybersécurité, de l'administration systèmes et réseaux, d'Active Directory, de la Blue Team, du Red Team/Pentest et de la sécurité réseau Cisco.
 
 ## 🏗️ Architecture principale
 
-Le projet est organisé autour de deux environnements complémentaires :
+Le projet est organisé autour de plusieurs environnements complémentaires :
 
 1. **Homelab Windows / Active Directory / Blue Team**
    - Windows Server 2025 / SRV25
@@ -22,6 +22,16 @@ Le projet est organisé autour de deux environnements complémentaires :
    - OSPF
    - NAT/PAT
    - scénarios Red Team / Blue Team
+
+3. **Lab Pentest / Red Team**
+   - reconnaissance
+   - scanning
+   - énumération
+   - sécurité Windows / Active Directory
+   - sécurité web sur cibles de formation
+   - exploitation contrôlée
+   - analyse des traces côté Blue Team
+   - scénarios Purple Team
 
 ## 📚 Documentation
 
@@ -45,6 +55,10 @@ Le projet est organisé autour de deux environnements complémentaires :
 - [Configuration et sécurité](05-packet-tracer/configuration-security.md)
 - [Routage, OSPF et NAT/PAT](05-packet-tracer/routing-wan.md)
 - [Scénarios Red Team / Blue Team](05-packet-tracer/red-blue-tests.md)
+
+### Pentest / Red Team
+
+- [Lab Pentest](10-pentest/README.md)
 
 ## 🖥️ Infrastructure Windows
 
@@ -110,6 +124,25 @@ Scénarios Packet Tracer documentés :
 
 Les résultats distinguent explicitement les contrôles réellement validés de ceux qui ont seulement été configurés mais non démontrés dans Packet Tracer.
 
+## 🔴 Pentest / Red Team
+
+Le module [10-pentest](10-pentest/README.md) couvre progressivement :
+
+- reconnaissance ;
+- scanning réseau ;
+- énumération ;
+- sécurité web sur environnements de formation ;
+- Windows / Active Directory ;
+- Linux ;
+- exploitation contrôlée ;
+- post-exploitation contrôlée ;
+- analyse des traces ;
+- rapports de pentest ;
+- mapping MITRE ATT&CK ;
+- scénarios Purple Team.
+
+Tous les exercices d'exploitation sont limités aux systèmes du homelab ou aux plateformes explicitement prévues pour l'entraînement.
+
 ## 🎯 Progression
 
 ### Infrastructure Windows
@@ -156,12 +189,24 @@ Les résultats distinguent explicitement les contrôles réellement validés de 
 - [ ] Validation DHCP Snooping dans un environnement permettant son fonctionnement complet
 - [ ] Validation DAI avec une véritable trame ARP spoofing
 
+### Pentest / Red Team
+- [x] Structure du module Pentest
+- [ ] Reconnaissance
+- [ ] Network Scanning
+- [ ] Énumération
+- [ ] Web Security
+- [ ] Windows / Active Directory
+- [ ] Linux
+- [ ] Exploitation contrôlée
+- [ ] Post-exploitation contrôlée
+- [ ] Purple Team
+
 ## 🧰 Technologies
 
-Windows Server · Windows 11 · Active Directory · DNS · VirtualBox · PowerShell · GPO · Sysmon · WEF/WEC · Cisco Packet Tracer · VLAN · ACL · SSH · OSPF · NAT/PAT · TCP/IP · Linux/Kali · SIEM · MITRE ATT&CK
+Windows Server · Windows 11 · Active Directory · DNS · VirtualBox · PowerShell · Sysmon · WEF/WEC · Cisco Packet Tracer · VLAN · ACL · SSH · OSPF · NAT/PAT · TCP/IP · Linux/Kali · Nmap · SIEM · MITRE ATT&CK
 
 ## 📚 Objectif professionnel
 
-Ce projet développe des compétences pratiques en administration systèmes et réseaux, Active Directory, Windows Security, durcissement, segmentation réseau, sécurité des équipements, centralisation et analyse de logs, détection et réponse aux incidents, et Blue/Red/Purple Team.
+Ce projet développe des compétences pratiques en administration systèmes et réseaux, Active Directory, Windows Security, durcissement, segmentation réseau, sécurité des équipements, centralisation et analyse de logs, détection et réponse aux incidents, pentest et approches Blue/Red/Purple Team.
 
 Projet réalisé dans le cadre du parcours Master/Mastère Cybersécurité.
