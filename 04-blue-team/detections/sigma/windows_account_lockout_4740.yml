@@ -1,0 +1,20 @@
+title: Windows Account Lockout - Event ID 4740
+id: 1d8c5f1e-4740-4b5d-9f70-4625lockout01
+status: experimental
+description: Detects Windows Security Event ID 4740, indicating an account was locked out.
+author: Jeremy253058
+date: 2026/09/25
+logsource:
+  product: windows
+  service: security
+detection:
+  selection:
+    EventID: 4740
+  condition: selection
+falsepositives:
+  - Repeated incorrect passwords from a legitimate user
+  - Services or scheduled tasks using stale credentials
+  - Misconfigured applications
+level: medium
+tags:
+  - attack.credential_access
