@@ -51,3 +51,35 @@ This should trigger investigation of:
 4. Check for account lockout events.
 5. Check for a successful logon after the failures.
 6. Determine whether the activity is expected or requires incident response.
+
+## Observed lab test — 2026-09-25
+
+A dedicated test account `redteam-test` was used for the controlled authentication-failure scenario.
+
+Observed sequence:
+
+- AD lockout threshold: 5 failures.
+- `BadPwdCount` reached 5.
+- `LockedOut` became `True`.
+- Five Event ID 4625 records were observed in close succession.
+- A direct search for Event ID 4740 immediately afterward did not return a result in the queried Security log.
+
+The absence of a returned 4740 in that query should not be interpreted as proof that no lockout event exists anywhere in the environment. The event can be investigated further using the domain-controller security logs and the event timestamp.
+
+The scenario therefore confirms the following chain in the lab:
+
+```text
+Kali / redteam-test
+        |
+        | repeated incorrect SMB authentication
+        v
+SRV25 / Active Directory
+        |
+        +--> Event ID 4625 (failed logon)
+        |
+        +--> BadPwdCount = 5
+        |
+        +--> LockedOut = True
+```
+
+The account should not be used for additional authentication attempts while it remains locked.
