@@ -88,12 +88,15 @@ DAI était actif avec les validations source MAC, destination MAC et IP, mais le
 
 Ces éléments sont donc documentés comme configurés mais non démontrés expérimentalement dans ce simulateur.
 
+Une démonstration complémentaire d'ARP spoofing / MITM a ensuite été réalisée sur les machines virtuelles Kali, WIN11-CLIENT et SRV25 du homelab. Voir [la documentation complète du scénario MITM](../10-pentest/02-network-attacks/arp-spoofing-mitm.md).
+
 ## Documentation
 
 - [Architecture et adressage](architecture-addressing.md)
 - [Configuration et sécurité](configuration-security.md)
 - [Routage, OSPF et NAT/PAT](routing-wan.md)
 - [Scénarios Red Team / Blue Team](red-blue-tests.md)
+- [Démonstration ARP Spoofing / MITM sur le homelab](../10-pentest/02-network-attacks/arp-spoofing-mitm.md)
 
 ## Sécurité des secrets
 
