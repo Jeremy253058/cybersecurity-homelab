@@ -76,6 +76,8 @@ IP Validation Failures: 0
 
 Conclusion : DAI configuré et actif, mais attaque non démontrée par un compteur dans Packet Tracer.
 
+Une démonstration complémentaire a été réalisée hors Packet Tracer avec Kali, WIN11-CLIENT et SRV25. Le scénario VM a confirmé l'empoisonnement ARP bidirectionnel et l'observation d'un trafic HTTP de test en clair depuis Kali. La procédure et les preuves sont documentées dans [ARP Spoofing / MITM](../10-pentest/02-network-attacks/arp-spoofing-mitm.md).
+
 ## 6. SSH depuis ADMIN
 
 Depuis PC-ADMIN :
