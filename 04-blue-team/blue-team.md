@@ -42,3 +42,16 @@ Résultat :
 Conclusion : le 15 septembre, `Test Attacker` a été ajouté à `GG-Utilisateurs` par `Administrateur`. Quatre jours plus tard, le compte a été verrouillé depuis `WIN11-CLIENT`.
 
 La chronologie seule ne permet pas d'affirmer que les deux événements sont directement liés.
+
+
+---
+
+## 📸 Preuves visuelles
+
+### Échecs d'authentification et verrouillage
+
+![Preuve Event 4625](screenshots/4625-lockout-proof.svg)
+
+### Audit AD et corrélation
+
+![Preuve corrélation](screenshots/audit-correlation-proof.svg)

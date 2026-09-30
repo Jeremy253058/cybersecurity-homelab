@@ -83,3 +83,8 @@ SRV25 / Active Directory
 ```
 
 The account should not be used for additional authentication attempts while it remains locked.
+
+
+## 📸 Preuve visuelle du test
+
+![Preuve Event 4625 et verrouillage](../screenshots/4625-lockout-proof.svg)

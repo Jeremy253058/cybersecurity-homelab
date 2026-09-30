@@ -40,3 +40,8 @@ Scénario observé :
 4. vérifier la chronologie ;
 5. déterminer si l'activité était attendue ;
 6. corréler avec d'autres événements avant de conclure.
+
+
+## 📸 Preuve visuelle
+
+![Preuve audit AD](screenshots/audit-correlation-proof.svg)
